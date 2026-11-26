@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weather Report</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="layout">
+    <!-- the drawer: saved cities and the city search -->
+    <aside id="drawer" class="drawer" aria-label="Cities">
+      <div class="brand"><span class="logo">⛅</span><div><b>Weather Report</b><small>real data · Open-Meteo</small></div></div>
+      <div class="search">
+        <label for="city-search" class="sr-only">Find a city</label>
+        <input id="city-search" type="search" placeholder="Find a city..." autocomplete="off">
+        <ul id="search-results" class="results" hidden></ul>
+      </div>
+      <h2 class="drawer-title">My cities</h2>
+      <ul id="city-list" class="cities"></ul>
+      <div class="units" role="group" aria-label="Units">
+        <button type="button" data-units="metric" class="unit">°C</button>
+        <button type="button" data-units="imperial" class="unit">°F</button>
+      </div>
+    </aside>
+    <div id="scrim" class="scrim" hidden></div>
+
+    <!-- the dashboard -->
+    <main class="main">
+      <header class="topbar">
+        <button id="menu" class="menu" aria-label="Open the city list" aria-controls="drawer" aria-expanded="false">☰</button>
+        <div>
+          <h1 id="place">Weather Report</h1>
+          <p id="updated" class="muted">Choose a city</p>
+        </div>
+      </header>
+
+      <p id="error" class="error" role="alert" hidden></p>
+
+      <section id="dashboard" class="dashboard" hidden>
+        <div id="hero" class="card hero">
+          <div class="hero-icon" id="now-icon"></div>
+          <div>
+            <div class="hero-temp" id="now-temp"></div>
+            <div class="hero-text" id="now-text"></div>
+            <div class="muted" id="now-range"></div>
+          </div>
+        </div>
+        <div class="tiles">
+          <div class="card tile"><span class="tile-label">Feels like</span><span class="tile-value" id="feels"></span></div>
+          <div class="card tile"><span class="tile-label">Humidity</span><span class="tile-value" id="humidity"></span></div>
+          <div class="card tile"><span class="tile-label">Wind</span><span class="tile-value" id="wind"></span></div>
+          <div class="card tile"><span class="tile-label">Sunrise · Sunset</span><span class="tile-value small" id="sun"></span></div>
+        </div>
+        <div class="card chart-card">
+          <h2>Next 24 hours</h2>
+          <div id="chart" class="chart" role="img" aria-label="Temperature and chance of rain for the next 24 hours"></div>
+        </div>
+        <div class="card">
+          <h2>7 days</h2>
+          <ul id="days" class="days"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
