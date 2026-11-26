@@ -51,3 +51,20 @@ def test_dashboard_page(client):
     assert 'id="chart"' in html
     assert "app.js" in html
     assert client.get("/static/app.js").status_code == 200
+
+
+def test_dashboard_is_pink(client):
+    response = client.get("/static/style.css")
+    assert response.status_code == 200
+    css = response.get_data(as_text=True)
+    assert "--accent: #ff69b4" in css
+    assert "--drawer: #d63384" in css
+    assert "linear-gradient(135deg, var(--accent), var(--accent-deep))" in css
+    assert ".city.active { background: var(--drawer-active)" in css
+    assert ".unit.on { background: var(--card)" in css
+    assert "border: 1px solid var(--drawer-line); background: var(--drawer-field)" in css
+    assert ".search input::placeholder" in css
+    for old in ("#2f6fed", "#6ea8ff", "#101a2e", "#dbe4f3", "#8fa0bd", "#2a3a5a", "#18243d",
+                "#22345a", "#edf2fd", "#3b9be8", "#1b2747", "#3f4f86", "#eef2f7", "#172033",
+                "#f6f8fc", "59, 155, 232"):
+        assert old not in css
