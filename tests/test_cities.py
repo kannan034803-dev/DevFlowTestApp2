@@ -50,20 +50,44 @@ def test_dashboard_page(client):
     assert 'id="city-list"' in html
     assert 'id="chart"' in html
     assert "app.js" in html
+    assert "<b>Weather Report</b>" in html
+    assert "real data" not in html
     assert client.get("/static/app.js").status_code == 200
 
 
-def test_dashboard_is_pink(client):
+def test_dashboard_is_blue(client):
     response = client.get("/static/style.css")
     assert response.status_code == 200
     css = response.get_data(as_text=True)
-    assert "--accent: #ff69b4" in css
-    assert "--drawer: #d63384" in css
+    # header (hero card)
+    assert "--accent: #3b82f6" in css
+    assert "--accent-deep: #1e40af" in css
     assert "linear-gradient(135deg, var(--accent), var(--accent-deep))" in css
+    # drawer
+    assert "--drawer: #1d4ed8" in css
+    assert "--drawer-muted: #c7dbff" in css
+    assert "background: var(--drawer);" in css
     assert ".city.active { background: var(--drawer-active)" in css
-    assert ".unit.on { background: var(--card)" in css
     assert "border: 1px solid var(--drawer-line); background: var(--drawer-field)" in css
     assert ".search input::placeholder" in css
+    # buttons
+    assert ".unit.on { background: var(--card)" in css
+    assert "color: var(--accent-deep)" in css
+    assert "--accent-tint: #e2ecff" in css
+    # chart
+    assert ".chart .rain-bar { fill: rgba(47, 128, 209, .30)" in css
+    assert "--rain: #2f80d1" in css
+    # no pink left
+    for pink in ("#ff69b4", "#d63384", "#e0287d", "#e0479e", "#ffe4f1", "#fff5fa", "#ffd6ea",
+                 "#fdf0f6", "#f3d3e3", "#2b1524", "#7a5468", "#3a0f2a", "#7a2a5c", "224, 71, 158"):
+        assert pink not in css
+    # 390px: drawer closed with a menu button, and it still slides in under 900px
+    assert "@media (max-width: 900px)" in css
+    assert ".menu { display: block; }" in css
+    assert ".dashboard { grid-template-columns: 1fr; }" in css
+    assert "@media (max-width: 480px)" in css
+    assert "transform: translateX(-100%)" in css
+    assert ".drawer.open { transform: translateX(0); }" in css
     for old in ("#2f6fed", "#6ea8ff", "#101a2e", "#dbe4f3", "#8fa0bd", "#2a3a5a", "#18243d",
                 "#22345a", "#edf2fd", "#3b9be8", "#1b2747", "#3f4f86", "#eef2f7", "#172033",
                 "#f6f8fc", "59, 155, 232"):
