@@ -55,17 +55,17 @@ def test_dashboard_page(client):
     assert client.get("/static/app.js").status_code == 200
 
 
-def test_dashboard_is_blue(client):
+def test_dashboard_is_green(client):
     response = client.get("/static/style.css")
     assert response.status_code == 200
     css = response.get_data(as_text=True)
     # header (hero card)
-    assert "--accent: #3b82f6" in css
-    assert "--accent-deep: #1e40af" in css
+    assert "--accent: #16a34a" in css
+    assert "--accent-deep: #166534" in css
     assert "linear-gradient(135deg, var(--accent), var(--accent-deep))" in css
     # drawer
-    assert "--drawer: #1d4ed8" in css
-    assert "--drawer-muted: #c7dbff" in css
+    assert "--drawer: #15803d" in css
+    assert "--drawer-muted: #c6ecd3" in css
     assert "background: var(--drawer);" in css
     assert ".city.active { background: var(--drawer-active)" in css
     assert "border: 1px solid var(--drawer-line); background: var(--drawer-field)" in css
@@ -73,10 +73,17 @@ def test_dashboard_is_blue(client):
     # buttons
     assert ".unit.on { background: var(--card)" in css
     assert "color: var(--accent-deep)" in css
-    assert "--accent-tint: #e2ecff" in css
+    assert "--accent-tint: #dcf5e4" in css
     # chart
-    assert ".chart .rain-bar { fill: rgba(47, 128, 209, .30)" in css
-    assert "--rain: #2f80d1" in css
+    assert ".chart .rain-bar { fill: rgba(47, 158, 91, .30)" in css
+    assert "--rain: #2f9e5b" in css
+    js = client.get("/static/app.js").get_data(as_text=True)
+    assert "class: 'rain-bar'" in js
+    assert "fill:" not in js and "stroke:" not in js
+    # the previous blue palette is gone
+    for blue in ("#3b82f6", "#1e40af", "#1d4ed8", "#c7dbff", "#e2ecff", "#2f80d1", "47, 128, 209",
+                 "#eef4fd", "#d4e1f5", "#f5f9ff"):
+        assert blue not in css
     # no pink left
     for pink in ("#ff69b4", "#d63384", "#e0287d", "#e0479e", "#ffe4f1", "#fff5fa", "#ffd6ea",
                  "#fdf0f6", "#f3d3e3", "#2b1524", "#7a5468", "#3a0f2a", "#7a2a5c", "224, 71, 158"):
