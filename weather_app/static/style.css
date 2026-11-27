@@ -1,10 +1,10 @@
 * { box-sizing: border-box; }
 :root {
-  --bg: #eef4fd; --card: #ffffff; --ink: #14213a; --muted: #56688a; --line: #d4e1f5;
-  --accent: #3b82f6; --warm: #f08a24; --rain: #2f80d1; --drawer: #1d4ed8; --drawer-ink: #ffffff;
-  --accent-deep: #1e40af; --accent-tint: #e2ecff; --day: #f5f9ff; --drawer-muted: #c7dbff;
+  --bg: #eef8f1; --card: #ffffff; --ink: #142a1f; --muted: #55705f; --line: #d3eadb;
+  --accent: #16a34a; --warm: #f08a24; --rain: #15803d; --drawer: #15803d; --drawer-ink: #ffffff;
+  --accent-deep: #166534; --accent-tint: #dcfce7; --day: #f3fbf6; --drawer-muted: #c8f0d6;
   --drawer-line: rgba(255,255,255,.45); --drawer-field: rgba(255,255,255,.18); --drawer-active: rgba(255,255,255,.24);
-  --night-from: #0d1b3d; --night-to: #2a4c8f;
+  --night-from: #0b2a1c; --night-to: #1f5c3d;
 }
 body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); }
 h1, h2 { margin: 0; }
@@ -63,7 +63,7 @@ h2 { font-size: 15px; color: var(--muted); font-weight: 600; margin-bottom: 12px
 .chart svg { width: 100%; height: auto; display: block; }
 .chart .temp-line { fill: none; stroke: var(--warm); stroke-width: 2.5; }
 .chart .temp-area { fill: rgba(240, 138, 36, .12); }
-.chart .rain-bar { fill: rgba(47, 128, 209, .30); }
+.chart .rain-bar { fill: rgba(21, 128, 61, .30); }
 .chart text { font-size: 11px; fill: var(--muted); }
 .chart .temp-label { fill: var(--ink); font-weight: 600; }
 .days { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
